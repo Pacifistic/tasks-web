@@ -10,7 +10,6 @@ import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import Tasks from "./components/tasks.component";
-import Admin from "./components/admin.component";
 import AuthVerify from "./common/auth-verify";
 
 class App extends Component {
@@ -112,8 +111,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />
-              <Route path="/user" component={Tasks} />
-              <Route path="/admin" component={Admin} />
+              <Route exact path="/tasks" component={Tasks} />
             </Switch>
           </div>
 
