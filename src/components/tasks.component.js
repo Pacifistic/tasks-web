@@ -60,7 +60,7 @@ export default class Tasks extends Component {
 
     renderTasks(){
         return this.state.tasks.map((task) => {
-            const { desc, endTime, frequency, id, lastTime, name, repeating, start} = task
+            const { desc, id, name, start} = task
             return(
                 <tr key={id}>
                     <th scope={"row"}>{id}</th>
@@ -74,13 +74,13 @@ export default class Tasks extends Component {
 
     render() {
         return (
-            <div className="tasks-table">
+            <div className="container">
                 <div className="container">
-                    <header className="jumbotron align-content-center">
+                    <header>
                         <h3>Task List</h3>
                     </header>
                 </div>
-                <table>
+                <table class="table table-dark">
                     <thead>
                     <tr>
                         <th scope={"col"}>id</th>
@@ -94,11 +94,6 @@ export default class Tasks extends Component {
                     </tbody>
                 </table>
             </div>
-            // <div className="container">
-            //     <header className="jumbotron">
-            //         <h3>{this.state.content}</h3>
-            //     </header>
-            // </div>
         );
     }
 }

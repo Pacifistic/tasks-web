@@ -46,7 +46,7 @@ class App extends Component {
     const { currentUser, showAdminBoard } = this.state;
 
     return (
-        <div>
+        <div className={"bg-dark height"}>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
             <Link to={"/"} className="navbar-brand">
               Red Arm Devs
@@ -105,7 +105,7 @@ class App extends Component {
             )}
           </nav>
 
-          <div className="container mt-3">
+          <div className="container mt-3 text-light">
             <Switch>
               <Route exact path={["/", "/home"]} component={Home} />
               <Route exact path="/login" component={Login} />
