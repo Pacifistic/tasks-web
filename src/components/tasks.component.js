@@ -58,6 +58,11 @@ export default class Tasks extends Component {
         );
     }
 
+    handleDelete(taskID){
+        console.log(taskID)
+        UserService.deleteTask(taskID).then(response => this.updateTasks())
+    }
+
     renderTasks(){
         return this.state.tasks.map((task) => {
             const { desc, id, name, start} = task
@@ -67,6 +72,7 @@ export default class Tasks extends Component {
                     <td>{name}</td>
                     <td>{desc}</td>
                     <td>{start}</td>
+                    <td><button className="btn  btn-primary" onClick={() => this.handleDelete(id)}>Delete</button></td>
                 </tr>
             )
         });
@@ -80,13 +86,14 @@ export default class Tasks extends Component {
                         <h3>Task List</h3>
                     </header>
                 </div>
-                <table class="table table-dark">
+                <table className="table table-dark">
                     <thead>
                     <tr>
                         <th scope={"col"}>id</th>
                         <th scope={"col"}>name</th>
                         <th scope={"col"}>description</th>
                         <th scope={"col"}>start time</th>
+                        <th scope={"col"}>actions</th>
                     </tr>
                     </thead>
                     <tbody>
