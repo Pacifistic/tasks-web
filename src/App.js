@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Redirect, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -110,8 +110,11 @@ class App extends Component {
               <Route exact path={["/", "/home"]} component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
-              <Route exact path="/profile" component={Profile} />
-              <Route exact path="/tasks" component={Tasks} />
+              <PrivateRoute exact path="/profile" component={Profile} />
+              <PrivateRoute exact path="/tasks" component={Tasks} />
+              <Route path="*">
+                <Redirect to="/home" />
+              </Route>
             </Switch>
           </div>
 
@@ -120,6 +123,18 @@ class App extends Component {
         </div>
     );
   }
+}
+
+function PrivateRoute ({component: Component, ...rest}) {
+  const user = AuthService.getCurrentUser();
+  return (
+      <Route
+          {...rest}
+          render={(props) => user
+              ? <Component {...props} />
+              : <Redirect to={{pathname: '/home', state: {from: props.location}}} />}
+      />
+  )
 }
 
 export default App;
