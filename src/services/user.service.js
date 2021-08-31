@@ -24,6 +24,10 @@ class UserService {
     deleteTask(taskID){
         return axios.delete(API_URL, {params: {taskID: taskID}, headers: authHeader()})
     }
+
+    addTask(task){
+        return axios.post(API_URL, task, {headers: authHeader()})
+    }
 }
 
 export default new UserService();
