@@ -33,8 +33,8 @@ export default class NewTask extends Component{
     }
 
     handleNewTask(e){
-        //e.preventDefault();
-        UserService.addTask(this.state).then()
+        e.preventDefault();
+        UserService.addTask(this.state).then(response => this.props.newTaskCall())
     }
 
     render() {
@@ -65,7 +65,7 @@ export default class NewTask extends Component{
                                 />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="frequency">Frequency</label>
+                            <label htmlFor="frequency">Frequency (in hours)</label>
                             <input
                                 type="number"
                                 className="form-control"

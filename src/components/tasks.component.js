@@ -9,7 +9,8 @@ export default class Tasks extends Component {
 
         this.state = {
             content: "",
-            tasks: []
+            tasks: [],
+            newTask: false
         };
     }
 
@@ -84,6 +85,11 @@ export default class Tasks extends Component {
         });
     }
 
+    newTaskToggle(){
+        this.state.newTask ? this.setState({newTask: false}) : this.setState({newTask: true})
+        this.updateTasks()
+    }
+
     render() {
         return (
             <div className="container">
@@ -91,7 +97,13 @@ export default class Tasks extends Component {
                     <header>
                         <h3>Task List</h3>
                     </header>
-                    <NewTask />
+                    {this.state.newTask ?
+                        <div>
+                            <button className="btn btn-light" onClick={() => this.newTaskToggle()}>Cancel</button>
+                            <NewTask newTaskCall={this.newTaskToggle.bind(this)}/>
+                        </div> :
+                        <button className="btn btn-light" onClick={() => this.newTaskToggle()}>New Task</button>
+                    }
                 </div>
                 <table className="table table-dark">
                     <thead>
