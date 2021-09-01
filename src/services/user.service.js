@@ -28,6 +28,10 @@ class UserService {
     addTask(task){
         return axios.post(API_URL, task, {headers: authHeader()})
     }
+
+    completeTask(taskID){
+        return axios.patch(API_URL,{}, {params: {taskID: taskID}, headers: authHeader()})
+    }
 }
 
 export default new UserService();
