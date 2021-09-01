@@ -18,7 +18,6 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showAdminBoard: false,
       currentUser: undefined,
     };
   }
@@ -29,7 +28,6 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
   }
@@ -37,16 +35,15 @@ class App extends Component {
   logOut() {
     AuthService.logout();
     this.setState({
-      showAdminBoard: false,
       currentUser: undefined,
     });
   }
 
   render() {
-    const { currentUser, showAdminBoard } = this.state;
+    const { currentUser } = this.state;
 
     return (
-        <div className={"bg-dark height"}>
+        <div className={"bg-dark"}>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
             <Link to={"/"} className="navbar-brand">
               Red Arm Devs
@@ -57,14 +54,6 @@ class App extends Component {
                   Home
                 </Link>
               </li>
-
-              {showAdminBoard && (
-                  <li className="nav-item">
-                    <Link to={"/admin"} className="nav-link">
-                      Admin
-                    </Link>
-                  </li>
-              )}
 
               {currentUser && (
                   <li className="nav-item">
