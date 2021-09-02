@@ -23,10 +23,8 @@ export default class Task extends Component{
 
     completeTask(taskID){
         UserService.completeTask(taskID).then(response => {
-            this.setState({
-                lastTime: new Date(response.data)
-            })
-            this.getNextTime()
+            this.setState({lastTime: new Date(response.data)})
+            this.props.updateTasks()
         })
     }
 
@@ -55,15 +53,23 @@ export default class Task extends Component{
         }
     }
 
+    getFrequencyReadable(){
+        const {frequency} = this.state
+        if(frequency >= 24)
+            return frequency/24 + " days"
+        else
+            return frequency + " hours"
+    }
+
     render() {
-        const {id, name, desc, lastTime, frequency, isTime, nextTime} = this.state
+        const {id, name, desc, lastTime, isTime} = this.state
         return (
-            <tr key={id} className={(isTime ? "table table-danger" : "")}>
+            <tr key={id} className={(isTime ? "table table-primary" : "")}>
                 <th scope={"row"}>{id}</th>
                 <td>{name}</td>
-                <td>{desc}</td>
+                <td style={{maxWidth: '300px', wordWrap:"break-word"}}>{desc}</td>
                 <td>{lastTime ? lastTime.toString() : ""}</td>
-                <td>{frequency}</td>
+                <td>{this.getFrequencyReadable()}</td>
                 <td>
                     <Check completeTaskCall={this.completeTask.bind(this)} taskID={id}/>
                     <button className="btn btn-primary" onClick={() => this.handleDelete(id)}>Delete</button>

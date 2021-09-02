@@ -28,8 +28,6 @@ export default class NewTask extends Component{
 
     onChangeFrequency(e){
         this.setState({frequency: Number(e.target.value)})
-        console.log(this.state.frequency)
-        console.log(this.state.frequency.type)
     }
 
     handleNewTask(e){
@@ -75,10 +73,6 @@ export default class NewTask extends Component{
                                 />
                         </div>
                         <input className={"btn btn-primary"} type="submit" value="submit"/>
-
-                        {/*<div className="form-group">*/}
-                        {/*    <button className="btn btn-primary btn-block">Submit Task</button>*/}
-                        {/*</div>*/}
                     </div>
                 </form>
             </div>

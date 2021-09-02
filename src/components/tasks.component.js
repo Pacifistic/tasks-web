@@ -34,11 +34,6 @@ export default class Tasks extends Component {
             }
         );
         this.updateTasks();
-        this.updateTimer = setInterval(() => this.updateTasks(), 30000);
-    }
-
-    componentWillUnmount(){
-        clearInterval(this.updateTimer);
     }
 
     updateTasks(){
