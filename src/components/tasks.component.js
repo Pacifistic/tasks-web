@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import UserService from "../services/user.service";
 import NewTask from "./new.component";
-import Check from "./check.component";
+import Task from "./task.component";
 
 export default class Tasks extends Component {
     constructor(props) {
@@ -56,31 +56,9 @@ export default class Tasks extends Component {
         );
     }
 
-    handleDelete(taskID){
-        UserService.deleteTask(taskID).then(response => this.updateTasks())
-    }
-
-    completeTask(taskID){
-        console.log(taskID)
-        UserService.completeTask(taskID).then(response => this.updateTasks())
-    }
-
     renderTasks(){
         return this.state.tasks.map((task) => {
-            const { desc, id, name, lastTime, frequency} = task
-            return(
-                <tr key={id}>
-                    <th scope={"row"}>{id}</th>
-                    <td>{name}</td>
-                    <td>{desc}</td>
-                    <td>{lastTime}</td>
-                    <td>{frequency ? frequency.substr(2) : 0}</td>
-                    <td>
-                        <Check completeTaskCall={this.completeTask.bind(this)} taskID={id}/>
-                        <button className="btn  btn-primary" onClick={() => this.handleDelete(id)}>Delete</button>
-                    </td>
-                </tr>
-            )
+            return <Task key={task.id} updateTasks={this.updateTasks.bind(this)} {...task}/>
         });
     }
 
