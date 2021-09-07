@@ -30,8 +30,6 @@ export default class Task extends Component{
         const {isTime} = this.state
         if(!isTime){
             this.isTime();
-            if(isTime)
-                this.props.updateTasks()
         }
     }
 
@@ -44,7 +42,7 @@ export default class Task extends Component{
     }
 
     handleDelete(taskID){
-        UserService.deleteTask(taskID).then(response => this.props.updateTasks())
+        UserService.deleteTask(taskID).then(() => this.props.updateTasks())
     }
 
     getNextTime(){
