@@ -10,11 +10,13 @@ export default class NewTask extends Component{
         this.onChangeName = this.onChangeName.bind(this)
         this.onChangeDesc = this.onChangeDesc.bind(this)
         this.onChangeFrequency = this.onChangeFrequency.bind(this)
+        this.onChangeType = this.onChangeType.bind(this)
 
         this.state = {
             name: "",
             desc: "",
-            frequency: 0
+            frequency: 0,
+            freqType: "hours"
         }
     }
 
@@ -27,12 +29,28 @@ export default class NewTask extends Component{
     }
 
     onChangeFrequency(e){
-        this.setState({frequency: Number(e.target.value)})
+        let f = Number(e.target.value)
+        switch(this.state.freqType){
+            case "hours":
+                this.setState({frequency: f})
+                break
+            case "days":
+                this.setState({frequency: f*24})
+                break
+            case "weeks":
+                this.setState({frequency: f*24*7})
+                break
+            default:
+                break
+        }
+    }
+    onChangeType(e){
+        this.setState({freqType: e.target.value})
     }
 
     handleNewTask(e){
         e.preventDefault();
-        UserService.addTask(this.state).then(response => this.props.newTaskCall())
+        UserService.addTask(this.state).then(() => this.props.newTaskCall())
     }
 
     render() {
@@ -44,7 +62,7 @@ export default class NewTask extends Component{
                     ref={c => {this.form = c;}}
                 >
                     <div>
-                        <div className="form-group">
+                        <div className="col-md-12">
                             <label htmlFor="name">Task Name</label>
                             <input
                                 type="text"
@@ -53,7 +71,7 @@ export default class NewTask extends Component{
                                 onChange={this.onChangeName}
                                 />
                         </div>
-                        <div className="form-group">
+                        <div className="col-md-12">
                             <label htmlFor="desc">Task Description</label>
                             <input
                                 type="text"
@@ -62,15 +80,25 @@ export default class NewTask extends Component{
                                 onChange={this.onChangeDesc}
                                 />
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="frequency">Frequency (in hours)</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                min={0}
-                                value={this.state.frequency}
-                                onChange={this.onChangeFrequency}
-                                />
+                        <div className="row g-0">
+                            <label htmlFor="frequency">Frequency</label>
+                            <div className="col-md-7">
+
+                                <input
+                                    type="number"
+                                    className="form-control col"
+                                    min={0}
+                                    // value={this.state.frequency}
+                                    onChange={this.onChangeFrequency}
+                                    />
+                            </div>
+                            <div className={"col-md-5"}>
+                                <select className={"form-select col"} style={{marginBottom:10}} onChange={this.onChangeType}>
+                                    <option value={"hours"}>hours</option>
+                                    <option value={"days"}>days</option>
+                                    <option value={"weeks"}>weeks</option>
+                                </select>
+                            </div>
                         </div>
                         <input className={"btn btn-primary"} type="submit" value="submit"/>
                     </div>
