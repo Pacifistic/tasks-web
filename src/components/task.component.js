@@ -19,11 +19,26 @@ export default class Task extends Component{
 
     componentDidMount() {
         this.getNextTime()
+        this.checkTimer = setInterval(() => this.checkTask(), 30000)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.checkTimer)
+    }
+
+    checkTask(){
+        const {isTime} = this.state
+        if(!isTime){
+            this.isTime();
+            if(isTime)
+                this.props.updateTasks()
+        }
     }
 
     completeTask(taskID){
         UserService.completeTask(taskID).then(response => {
             this.setState({lastTime: new Date(response.data)})
+            this.getNextTime()
             this.props.updateTasks()
         })
     }
@@ -37,7 +52,7 @@ export default class Task extends Component{
             this.setState({nextTime: null})
             return
         }
-        let next = this.state.lastTime
+        let next = new Date(this.state.lastTime)
         next.setTime(next.getTime() + (this.state.frequency * 3600 * 1000))
         this.setState({nextTime: next},() => this.isTime())
     }
